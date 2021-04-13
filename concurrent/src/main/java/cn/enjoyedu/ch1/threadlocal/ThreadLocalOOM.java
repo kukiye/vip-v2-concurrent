@@ -11,9 +11,10 @@ public class ThreadLocalOOM {
     private static final int TASK_LOOP_SIZE = 500;
 
     final static ThreadPoolExecutor poolExecutor
-            = new ThreadPoolExecutor(5, 5, 1,
+            = new ThreadPoolExecutor(5, 5,
+            1,
             TimeUnit.MINUTES,
-            new LinkedBlockingQueue<Runnable>());
+            new LinkedBlockingQueue<>());
 
     static class LocalVariable {
         private byte[] a = new byte[1024*1024*5];/*5M大小的数组*/
@@ -23,11 +24,15 @@ public class ThreadLocalOOM {
             = new ThreadLocal<>();
 
     public static void main(String[] args) throws InterruptedException {
+        Object o = new Object();
+        /*5*5=25*/
         for (int i = 0; i < TASK_LOOP_SIZE; ++i) {
             poolExecutor.execute(new Runnable() {
                 public void run() {
+                    //localVariable.set(new LocalVariable());
                     new LocalVariable();
                     System.out.println("use local varaible");
+                    //localVariable.remove();
                 }
             });
 

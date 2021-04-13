@@ -16,6 +16,7 @@ public class TestIntegerSyn {
     private static class Worker implements Runnable{
 
         private Integer i;
+        private Object o = new Object();
 
         public Worker(Integer i) {
             this.i=i;
@@ -23,17 +24,20 @@ public class TestIntegerSyn {
 
         @Override
         public void run() {
-            synchronized (i) {
+            synchronized (o) {
                 Thread thread=Thread.currentThread();
-                System.out.println(thread.getName()+"--@"+System.identityHashCode(i));
+                System.out.println(thread.getName()+"--@"
+                        +System.identityHashCode(i));
                 i++;
-                System.out.println(thread.getName()+"-------"+i+"-@"+System.identityHashCode(i));
+                System.out.println(thread.getName()+"-------"+i+"-@"
+                        +System.identityHashCode(i));
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(thread.getName()+"-------"+i+"--@"+System.identityHashCode(i));
+                System.out.println(thread.getName()+"-------"+i+"--@"
+                        +System.identityHashCode(i));
             }
 
         }

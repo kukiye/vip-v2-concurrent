@@ -6,14 +6,15 @@ import cn.enjoyedu.tools.SleepTools;
  * 类说明：演示Volatile的提供的可见性
  */
 public class VolatileCase {
-    private  static boolean ready;
+    private volatile static boolean ready;
     private static int number;
 
+    //
     private static class PrintThread extends Thread{
         @Override
         public void run() {
             System.out.println("PrintThread is running.......");
-            while(!ready);
+            while(!ready);//无限循环
             System.out.println("number = "+number);
         }
     }

@@ -44,6 +44,6 @@ public class NotSafe {
         count1.start();
         count2.start();
         Thread.sleep(50);
-        System.out.println(simplOper.count);
+        System.out.println(simplOper.count);//20000?
     }
 }
